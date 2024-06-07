@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/intro-style.css">
     <link rel="icon" href="./img/icon.png">
 
-    <!-- Aggiungi l'attributo integrity con il valore corretto per la Subresource Integrity -->
+
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Ygh6/Wf5OQm/R8j/z7+p1FqoScK7cYehxvfxzHfNUwEyJx" crossorigin="anonymous"></script>
 </head>
 <body>
