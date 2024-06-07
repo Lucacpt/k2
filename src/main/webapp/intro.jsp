@@ -9,7 +9,7 @@
     <link rel="icon" href="./img/icon.png">
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Ygh6/Wf5OQm/R8j/z7+p1FqoScK7cYehxvfxzHfNUwEyJx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha512-oL84kLQMEPIS350nZEpvFH1whU0HHGNUDq/X3WBdDAvKP7jn06gHTsCsymsoPYKF/duN8ZxzzvQgOaaZSgcYtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
