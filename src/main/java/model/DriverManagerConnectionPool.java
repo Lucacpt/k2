@@ -24,9 +24,9 @@ public class DriverManagerConnectionPool {
 		Connection newConnection = null;
 		String db = "GeekFactoryDB";
 		String username = "root";
-		String password = "root";
+		String password = "Marley2023";
 
-		newConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+db, username, password);
+		newConnection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/"+db, username, password);
 		
 		newConnection.setAutoCommit(false);
 		

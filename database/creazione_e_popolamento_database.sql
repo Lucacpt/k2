@@ -3,11 +3,14 @@ CREATE database GeekFactoryDB;
 
 USE GeekFactoryDB;
 
+-- Le password verranno crittografate in SHA-256
+-- Prima di inserirle nel database
+
 DROP TABLE IF EXISTS UserAccount;
 CREATE TABLE UserAccount
 (
 	email varchar(50) PRIMARY KEY NOT NULL,
-    passwordUser varchar(5000) NOT NULL,
+    passwordUser varchar(64) NOT NULL, -- Lunghezza SHA-256
 	nome varchar(50) NOT NULL,
     cognome varchar(50) NOT NULL,
     indirizzo varchar(50) NOT NULL,
@@ -95,165 +98,67 @@ CREATE TABLE Preferiti
     FOREIGN KEY(emailCliente) REFERENCES Cliente(email) ON UPDATE cascade ON DELETE cascade
 );
 
-USE GeekFactoryDB;
+/* Inserimento dati */
 
-/* begin data population */
-
-/* accountuser data */
+/* Account Utente */
 INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV, ruolo)
-VALUES ('geekfactory@gmail.com', MD5('12345678'), 'Geek', 'Factory', 'Unisa, Dipartimento Informatica', '3476549862', '5436724598431234', 'GeekFactory', 476, 'admin');
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('mariorossi@gmail.com', MD5('12345678'), 'Mario', 'Rossi', 'Caserta, Via Lazio 14', '3476549862', '5436724598431234', 'Mario Rossi', 476); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('luigiverdi@gmail.com', MD5('12345678'), 'Luigi', 'Verdi', 'Roma, Via Cesare 17', '3518457668', '6745982476311234', 'Luigi Verdi', 435); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('lorenzobianchi@gmail.com', MD5('12345678'), 'Lorenzo', 'Bianchi', 'Messina, Via Federico Fellini 14', '3474351776', '8791267534971234', 'Lorenzo Bianchi', 143); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('gigiprossi@gmail.com', MD5('12345678'), 'Gigi Pio', 'Rossi', 'Caserta, Via Lazio 14', '3518234671', '7613872515281234', 'Gigi Pio Rossi', 621); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('davidesari@yahoo.com', MD5('12345678'), 'Davide', 'Sari', 'Palermo, Via Libertà 15', '3517628334', '8901034567391234', 'Davide Sari', 165); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('emildcarlo@libero.it', MD5('12345678'), 'Emiliano', 'De Carlo', 'Napoli, Via Superiore 24', '3479228888', '3241768501101234', 'Emiliano De Carlo', 823); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('saraverdi@gmail.com', MD5('12345678'), 'Sara', 'Verdi', 'Pisa, Via Miracoli 73', '3476629882', '6734891203451234', 'Sara Verdi', 820); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('federeale@yahoo.com', MD5('12345678'), 'Federica', 'Reale', 'Salerno, Via Ponzi 1', '3471192332', '8923674123781234', 'Federica Reale', 732); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('cr7@gmail.com', MD5('4567812'), 'Cristiano', 'Ronaldo', 'Torino, Via Gemma 34', '3519938471', '7639071056291234', 'Cristiano Ronaldo', 623); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('simonebianchi@yahoo.com', MD5('45678912'), 'Simone', 'Bianchi', 'Milano, Via Verità 83', '3479990110', '7823019820351234', 'Simone Bianchi', 999); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('miriamesp@libero.it', MD5('45678912'), 'Miriam', 'Esposito', 'Napoli, Via Positano 56', '3479928998', '7153918202031234', 'Miriam Esposito', 102); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('michver@yahoo.com', MD5('45678912'), 'Michele', 'Verdi', 'Pavia, Via Roma 11', '3519923000', '6172918291541234', 'Michele Verdi', 629); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('dantealig@gmail.com', MD5('45678912'), 'Dante', 'Alighieri', 'Firenze, Via Santa Margherita 1', '3518823999', '8178291004211234', 'Dante Alighieri', 555); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('alemanzoni@gmail.com', MD5('45678912'), 'Alessandro', 'Manzoni', 'Milano, Via Gerolamo Morone 1', '3512579112', '7182192004621234', 'Alessandro Manzoni', 172); 
-INSERT INTO UserAccount (email, passwordUser, nome, cognome, indirizzo, telefono, numero, intestatario, CVV)
-VALUES ('pessimismocosmico@libero.it', MD5('45678912'), 'Giacomo', 'Leopardi', 'Recanati, Via Leopardi 14', '3519928000', '1672819100321234', 'Giacomo Leopardi', 671);
+VALUES 
+('geekfactory@gmail.com', SHA2('12345678', 256), 'Geek', 'Factory', 'Unisa, Dipartimento Informatica', '3476549862', '5436724598431234', 'GeekFactory', '476', 'admin'),
+('mariorossi@gmail.com', SHA2('12345678', 256), 'Mario', 'Rossi', 'Caserta, Via Lazio 14', '3476549862', '5436724598431234', 'Mario Rossi', '476', 'registeredUser'),
+('luigiverdi@gmail.com', SHA2('12345678', 256), 'Luigi', 'Verdi', 'Roma, Via Cesare 17', '3518457668', '6745982476311234', 'Luigi Verdi', '435', 'registeredUser'),
+('lorenzobianchi@gmail.com', SHA2('12345678', 256), 'Lorenzo', 'Bianchi', 'Messina, Via Federico Fellini 14', '3474351776', '8791267534971234', 'Lorenzo Bianchi', '143', 'registeredUser'),
+('gigiprossi@gmail.com', SHA2('12345678', 256), 'Gigi Pio', 'Rossi', 'Caserta, Via Lazio 14', '3518234671', '7613872515281234', 'Gigi Pio Rossi', '621', 'registeredUser'),
+('davidesari@yahoo.com', SHA2('12345678', 256), 'Davide', 'Sari', 'Palermo, Via Libertà 15', '3517628334', '8901034567391234', 'Davide Sari', '165', 'registeredUser'),
+('emildcarlo@libero.it', SHA2('12345678', 256), 'Emiliano', 'De Carlo', 'Napoli, Via Superiore 24', '3479228888', '3241768501101234', 'Emiliano De Carlo', '823', 'registeredUser'),
+('saraverdi@gmail.com', SHA2('12345678', 256), 'Sara', 'Verdi', 'Pisa, Via Miracoli 73', '3476629882', '6734891203451234', 'Sara Verdi', '820', 'registeredUser'),
+('federeale@yahoo.com', SHA2('12345678', 256), 'Federica', 'Reale', 'Torino, Via Gran Paradiso 6', '3517634234', '2367892145781234', 'Federica Reale', '432', 'registeredUser');
 
-/* cliente data */
-INSERT INTO Cliente (email) VALUES ('geekfactory@gmail.com');
-INSERT INTO Cliente (email) VALUES ('mariorossi@gmail.com');
-INSERT INTO Cliente (email) VALUES ('luigiverdi@gmail.com');
-INSERT INTO Cliente (email) VALUES ('lorenzobianchi@gmail.com');
-INSERT INTO Cliente (email) VALUES ('alemanzoni@gmail.com');
-INSERT INTO Cliente (email) VALUES ('miriamesp@libero.it');
-INSERT INTO Cliente (email) VALUES ('simonebianchi@yahoo.com');
-INSERT INTO Cliente (email) VALUES ('gigiprossi@gmail.com');
-INSERT INTO Cliente (email) VALUES ('davidesari@yahoo.com');
-INSERT INTO Cliente (email) VALUES ('emildcarlo@libero.it');
-INSERT INTO Cliente (email) VALUES ('saraverdi@gmail.com');
-INSERT INTO Cliente (email) VALUES ('federeale@yahoo.com');
-INSERT INTO Cliente (email) VALUES ('cr7@gmail.com');
-INSERT INTO Cliente (email) VALUES ('pessimismocosmico@libero.it');
-INSERT INTO Cliente (email) VALUES ('dantealig@gmail.com');
-INSERT INTO Cliente (email) VALUES ('michver@yahoo.com');
+/* Clienti */
+INSERT INTO Cliente (email) VALUES 
+('mariorossi@gmail.com'),
+('luigiverdi@gmail.com'),
+('lorenzobianchi@gmail.com'),
+('gigiprossi@gmail.com'),
+('davidesari@yahoo.com'),
+('emildcarlo@libero.it'),
+('saraverdi@gmail.com'),
+('federeale@yahoo.com');
 
-/* venditore data */
-INSERT INTO Venditore (email, feedback) VALUES ('michver@yahoo.com', 80);
-INSERT INTO Venditore (email, feedback) VALUES ('dantealig@gmail.com', 93);
-INSERT INTO Venditore (email, feedback) VALUES ('alemanzoni@gmail.com', NULL);
-INSERT INTO Venditore (email, feedback) VALUES ('mariorossi@gmail.com', NULL);
-INSERT INTO Venditore (email, feedback) VALUES ('pessimismocosmico@libero.it', 90);
-INSERT INTO Venditore (email) VALUES ('geekfactory@gmail.com');
-INSERT INTO Venditore (email) VALUES ('luigiverdi@gmail.com');
-INSERT INTO Venditore (email) VALUES ('lorenzobianchi@gmail.com');
-INSERT INTO Venditore (email) VALUES ('miriamesp@libero.it');
-INSERT INTO Venditore (email) VALUES ('simonebianchi@yahoo.com');
-INSERT INTO Venditore (email) VALUES ('gigiprossi@gmail.com');
-INSERT INTO Venditore (email) VALUES ('davidesari@yahoo.com');
-INSERT INTO Venditore (email) VALUES ('emildcarlo@libero.it');
-INSERT INTO Venditore (email) VALUES ('saraverdi@gmail.com');
-INSERT INTO Venditore (email) VALUES ('federeale@yahoo.com');
-INSERT INTO Venditore (email) VALUES ('cr7@gmail.com');
+/* Venditori */
+INSERT INTO Venditore (email, feedback) VALUES 
+('geekfactory@gmail.com', 4);
 
-/* tipologia data */
-INSERT INTO Tipologia (nome) VALUES ('Arredamento Casa');
-INSERT INTO Tipologia (nome) VALUES ('Action Figures');
-INSERT INTO Tipologia (nome) VALUES ('Gadget');
+/* Tipologia */
+INSERT INTO Tipologia (nome) VALUES 
+('Arredamento Casa'),
+('Action Figures'),
+('Gadget');
 
-/* prodotto data */
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Portachiavi naruto', 'Portachiavi di naruto, venduti tre in blocco', 9.99, 3.00, 'dantealig@gmail.com', 'Manga/Anime', 'Gadget', current_date(), 'naruto-keychain.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Corona game of thrones', 'Corona in plastica di game of thrones dipinta a mano', 19.99, 2.00, 'dantealig@gmail.com', 'Film/Serie TV', 'Gadget', current_date(), 'crown.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('GameBoy', 'GameBoy con case stampato in 3d, a cui è stato aggiunto un raspberry per emulazione', 39.99, 3.00, 'dantealig@gmail.com', 'Videogiochi', 'Gadget', current_date(), 'gameboy.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Spille Super Mario', '5 spille di Super Mario vendute insieme', 8.99, 1.00, 'pessimismocosmico@libero.it', 'Videogiochi', 'Gadget', current_date(), 'spille-mario.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Cover random', 'Vendo una cover di colore casuale', 2.99, 1.00, 'pessimismocosmico@libero.it', 'Originali', 'Gadget', current_date(), 'cover.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Goku DB', 'Vendo Goku di DragonBall, alto 25 cm', 29.99, 0.00, 'alemanzoni@gmail.com', 'Manga/Anime', 'Action Figures', current_date(), 'dragonball.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Stormtrooper', 'Vendo stormtrooper di star wars come in foto', 19.99, 0.00, 'michver@yahoo.com', 'Film/Serie TV', 'Action Figures', current_date(), 'swaf.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Action figure di Link', 'Link di The Legend of Zelda, alto 15 cm', 15.99, 0.00, 'michver@yahoo.com', 'Videogiochi', 'Action Figures', current_date(), 'zelda.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Cavaliere di Dark Souls', 'Alto 25 cm e già colorato', 31.99, 0.00, 'michver@yahoo.com', 'Videogiochi', 'Action Figures', current_date(), 'darksouls.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Modello umano', 'Modello umano da colorare a piacimento e snodabile', 23.99, 0.00, 'michver@yahoo.com', 'Originali', 'Action Figures', current_date(), 'human.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Stand cuffie HP', 'Stand per cuffie ispirato a Harry Potter', 14.99, 3.00, 'mariorossi@gmail.com', 'Film/Serie TV', 'Arredamento Casa', current_date(), 'cuffiehp.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Orologio Harry Potter', 'Orologio con batteria di Harry Potter, escluse pile', 29.99, 3.00, 'mariorossi@gmail.com', 'Film/Serie TV', 'Arredamento Casa', current_date(), 'orologio.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Lampada Minecraft', 'Lampada di minecraft apribile, da inserire batterie e lampadina', 79.99, 0.00, 'mariorossi@gmail.com', 'Videogiochi', 'Arredamento Casa', current_date(), 'minelamp.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Stand Portal', 'Stand per libri, custodie, etc... ispirato a Portal', 14.99, 2.00, 'mariorossi@gmail.com', 'Videogiochi', 'Arredamento Casa', current_date(), 'stand.jpg');
-INSERT INTO Prodotto (nome, descrizione, prezzo, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio, model)
-VALUES ('Vaso multicolore', 'Vaso multicolore alto 30 cm, con diametro di 27 cm', 34.99, 1.00, 'michver@yahoo.com', 'Originali', 'Arredamento Casa', current_date(), 'vaso.jpg');
+/* Prodotti */
+INSERT INTO Prodotto (nome, descrizione, prezzo, model, speseSpedizione, emailVenditore, tag, nomeTipologia, dataAnnuncio)
+VALUES 
+('Divano Moderno', 'Un divano moderno e confortevole.', 599.99, 'DM101', 19.99, 'geekfactory@gmail.com', 'Originali', 'Arredamento Casa', '2024-06-07'),
+('Funko Pop! Naruto', 'Una action figure Funko Pop! di Naruto.', 12.99, 'FPN101', 6.99, 'geekfactory@gmail.com', 'Manga/Anime', 'Action Figures', '2024-06-07'),
+('Tazza Avengers', 'Tazza con grafica degli Avengers.', 9.99, 'TAZAV101', 4.99, 'geekfactory@gmail.com', 'Film/Serie TV', 'Gadget', '2024-06-07');
 
-/* ordine data */
+/* Ordini */
 INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1000, 'mariorossi@gmail.com', 25.98, 2, '2017-11-11');
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1000, 'luigiverdi@gmail.com', 12.99, 1, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1001, 'lorenzobianchi@gmail.com', 21.99, 1, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1002, 'alemanzoni@gmail.com', 42.99, 1, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1003, 'miriamesp@libero.it', 19.98, 2, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1003, 'simonebianchi@yahoo.com', 19.98, 2, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1004, 'gigiprossi@gmail.com', 3.99, 1, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1005, 'davidesari@yahoo.com', 59.98, 2, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1001, 'emildcarlo@libero.it', 21.99, 1, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1002, 'saraverdi@gmail.com', 42.99, 1, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1004, 'federeale@yahoo.com', 3.99, 1, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1014, 'cr7@gmail.com', 35.99, 1, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1002, 'mariorossi@gmail.com', 42.99, 1, current_date());
-INSERT INTO Ordine (codiceProdotto, emailCliente, prezzoTotale, quantity, dataAcquisto)
-VALUES (1003, 'mariorossi@gmail.com', 19.98, 2, current_date());
+VALUES 
+(1000, 'mariorossi@gmail.com', 599.99, 1, '2024-06-07'),
+(1001, 'luigiverdi@gmail.com', 12.99, 1, '2024-06-07'),
+(1002, 'lorenzobianchi@gmail.com', 9.99, 2, '2024-06-07');
 
-/* recensione data */
+/* Recensioni */
 INSERT INTO Recensione (codiceProdotto, emailCliente, votazione, testo, dataRecensione)
-VALUES (1000, 'mariorossi@gmail.com', 10, NULL, current_date());
-INSERT INTO Recensione (codiceProdotto, emailCliente, votazione, testo, dataRecensione)
-VALUES (1001, 'lorenzobianchi@gmail.com', 9, NULL, current_date());
-INSERT INTO Recensione (codiceProdotto, emailCliente, votazione, testo, dataRecensione)
-VALUES (1000, 'luigiverdi@gmail.com', 9, NULL, current_date());
-INSERT INTO Recensione (codiceProdotto, emailCliente, votazione, testo, dataRecensione)
-VALUES (1014, 'cr7@gmail.com', 8, NULL, current_date());
-INSERT INTO Recensione (codiceProdotto, emailCliente, votazione, testo, dataRecensione)
-VALUES (1003, 'mariorossi@gmail.com', 9, NULL, current_date());
+VALUES 
+(1000, 'mariorossi@gmail.com', 5, 'Bellissimo divano, molto comodo!', '2024-06-07'),
+(1001, 'luigiverdi@gmail.com', 4, 'Molto carino, mi piace!', '2024-06-07'),
+(1002, 'lorenzobianchi@gmail.com', 3, 'Bella tazza, ma un po\' piccola.', '2024-06-07');
 
-/* preferiti data */
+/* Preferiti */
 INSERT INTO Preferiti (codiceProdotto, emailCliente)
-VALUES (1000, 'mariorossi@gmail.com');
-INSERT INTO Preferiti (codiceProdotto, emailCliente)
-VALUES (1001, 'mariorossi@gmail.com');
-INSERT INTO Preferiti (codiceProdotto, emailCliente)
-VALUES (1002, 'mariorossi@gmail.com');
+VALUES 
+(1000, 'mariorossi@gmail.com'),
+(1001, 'luigiverdi@gmail.com');
 
-/* end data population */
+COMMIT;
